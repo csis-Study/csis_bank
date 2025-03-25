@@ -8,6 +8,6 @@ class ConfigServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println(System.getProperty("java.version"));
 	}
-
 }
