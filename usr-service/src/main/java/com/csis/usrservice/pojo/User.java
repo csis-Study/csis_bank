@@ -1,4 +1,4 @@
-package com.csis.authservice.pojo;
+package com.csis.usrservice.pojo;
 
 import jakarta.persistence.*;
 import lombok.Data;
