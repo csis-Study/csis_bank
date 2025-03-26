@@ -21,7 +21,7 @@
         </processorPath>
         <module name="client-service" />
       </profile>
-      <profile name="Annotation profile for usr-service" enabled="true">
+      <profile name="Annotation profile for approval-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -31,6 +31,7 @@
         <module name="auth-service" />
         <module name="trade-service" />
         <module name="usr-service" />
+        <module name="approval-service" />
         <module name="risk-service" />
         <module name="notification-service" />
         <module name="advisory-service" />
@@ -41,6 +42,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="advisory-service" options="-parameters" />
+      <module name="approval-service" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="client-service" options="-parameters" />
       <module name="config-service" options="-parameters" />
