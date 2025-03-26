@@ -10,6 +10,7 @@
     <file url="file://$PROJECT_DIR$/notification-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/portfolio-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/risk-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/trade-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usr-service/src/main/java" charset="UTF-8" />
   </component>
 </project>

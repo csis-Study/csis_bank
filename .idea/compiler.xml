@@ -28,16 +28,15 @@
         <processorPath useClasspath="false">
           <entry name="D:/Maven/apache-maven-3.9.6/repository/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="usr-service" />
         <module name="auth-service" />
+        <module name="trade-service" />
+        <module name="usr-service" />
         <module name="risk-service" />
         <module name="notification-service" />
         <module name="advisory-service" />
+        <module name="portfolio-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="portfolio-service" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -50,6 +49,7 @@
       <module name="notification-service" options="-parameters" />
       <module name="portfolio-service" options="-parameters" />
       <module name="risk-service" options="-parameters" />
+      <module name="trade-service" options="-parameters" />
       <module name="usr-service" options="-parameters" />
     </option>
   </component>
