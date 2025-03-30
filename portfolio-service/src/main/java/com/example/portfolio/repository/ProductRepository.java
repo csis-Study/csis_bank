@@ -1,23 +1,21 @@
 package com.example.portfolio.repository;
 
+import com.example.portfolio._enum.ProductStatus;
 import com.example.portfolio._enum.ProductType;
 import com.example.portfolio.entity.Product;
-
-import feign.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-// ProductRepository.java
-@Repository
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    // 根据类型查询
-    List<Product> findByProductType(ProductType productType);
+    // 根据类型分页查询
+    Page<Product> findByProductType(ProductType productType, Pageable pageable);
 
-    // 模糊查询（包含大小写不敏感）
-    @Query("SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(CONCAT('%', :name, '%'))")
-    List<Product> findByProductNameContaining(@Param("name") String name);
+    // 根据名称模糊查询
+    Page<Product> findByProductNameContaining(String productName, Pageable pageable);
+
+    List<Product> findByStatus(ProductStatus status);
 }

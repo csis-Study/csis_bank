@@ -4,42 +4,53 @@ package com.example.portfolio.controller;
 import com.example.portfolio._enum.ProductType;
 import com.example.portfolio.entity.Product;
 import com.example.portfolio.service.ProductService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.example.portfolio.util.Result;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/products")
-@RequiredArgsConstructor
+@RequestMapping("/products")
+//@RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    // 新增产品
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product) {
-        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
+    public Result<Product> create(@RequestBody Product product) {
+        return productService.createProduct(product);
     }
 
-    @PutMapping("/{productId}")
-    public ResponseEntity<Product> update(@PathVariable String productId, @RequestBody Product product) {
-        return ResponseEntity.ok(productService.updateProduct(productId, product));
+    // 更新产品
+    @PutMapping
+    public Result<Product> update(@RequestBody Product product) {
+        return productService.updateProduct(product);
     }
 
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> delete(@PathVariable String productId) {
-        productService.deleteProduct(productId);
-        return ResponseEntity.noContent().build();
+    // 删除产品
+    @DeleteMapping("/{id}")
+    public Result<Void> delete(@PathVariable Integer id) {
+        return productService.deleteProduct(id);
     }
 
-    @GetMapping("/type/{type}")
-    public ResponseEntity<List<Product>> getByType(@PathVariable ProductType type) {
-        return ResponseEntity.ok(productService.getProductsByType(type));
+    // 按类型分页查询
+    @GetMapping("/type")
+    public Result<Page<Product>> getByType(
+            @RequestParam ProductType type,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return productService.getByType(type, page, size);
     }
 
-    @GetMapping("/name/{keyword}")
-    public ResponseEntity<List<Product>> searchByName(@PathVariable String keyword) {
-        return ResponseEntity.ok(productService.searchProductsByName(keyword));
+    // 按名称模糊查询
+    @GetMapping("/search")
+    public Result<Page<Product>> searchByName(
+            @RequestParam String name,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return productService.searchByName(name, page, size);
     }
 }

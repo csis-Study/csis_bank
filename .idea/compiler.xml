@@ -11,17 +11,7 @@
         <module name="gateway-service" />
         <module name="config-service" />
       </profile>
-      <profile name="Annotation profile for client-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="D:/Maven/apache-maven-3.9.6/repository/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="D:/Maven/apache-maven-3.9.6/repository/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="client-service" />
-      </profile>
-      <profile name="Annotation profile for approval-service" enabled="true">
+      <profile name="Annotation profile for usr-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -32,9 +22,10 @@
         <module name="trade-service" />
         <module name="usr-service" />
         <module name="approval-service" />
+        <module name="advisory-service" />
         <module name="risk-service" />
         <module name="notification-service" />
-        <module name="advisory-service" />
+        <module name="client-service" />
         <module name="portfolio-service" />
       </profile>
     </annotationProcessing>
