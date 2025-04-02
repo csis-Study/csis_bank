@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: config-service  # ????
+  cloud:
+    config:
+      server:  # ??????
+        git:
+          uri: https://github.com/csis-Study/csis_bank.git
+          search-paths: '{application}'
+          force-pull: true
+          timeout: 30
+  datasource:  # ??datasource??
+    url: jdbc:mysql://db-server:3306/common_db?useSSL=false
+    username: root
+    password: 020924
+  data:
+    redis:
+      password: Redis@123
+      port: 6379
+      host: redis-server
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: notification-service
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 3
+    listener:
+      ack-mode: manual_immediate
+
+server:
+  port: 8888
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 5
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: config-admin
+    password: Secure@2023
+
+encrypt:
+  key-store:
+    location: classpath:/server.jks
+    password: keystore-pass
+    alias: config-key
+    secret: key-secret

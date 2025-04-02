@@ -1,0 +1,14 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: approval-service
+  datasource:
+    url: jdbc:mysql://db-server:3306/approval_db?useSSL=false
+    username: approval_user
+    password: Approval@123
+
+workflow:
+  timeout: 3600
+  retry-count: 3

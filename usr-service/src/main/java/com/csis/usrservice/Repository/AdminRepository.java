@@ -30,7 +30,7 @@ public interface AdminRepository extends JpaRepository<Admin, String> {
 
     // 根据账户名查询密码
     // 使用自定义查询方法
-    @Query("SELECT a.password FROM Admin a WHERE a.username = ?1")
+    @Query("SELECT a.id, a.password FROM Admin a WHERE a.username = ?1")
     String findPasswordByUsername(String username);
 
 

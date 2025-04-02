@@ -25,7 +25,8 @@ class UsrServiceApplicationTests {
 	private AdminService adminService;
 
 
-
+	@Autowired
+	private AdminRepository adminRepository;
 
 	//添加管理员
 	@Test
@@ -57,6 +58,12 @@ class UsrServiceApplicationTests {
 	void testfindAdminbyE_mile(){
 		Optional<Admin> adminByEmail = adminService.findAdminByEmail("zhangsan@example.com");
 		System.out.println(adminByEmail);
+	}
+
+	@Test
+	void  testfindusername(){
+		System.out.println(adminRepository.findPasswordByUsername("admin_zhangsan"));
+
 	}
 
 }

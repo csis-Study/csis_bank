@@ -3,7 +3,10 @@ package com.example.portfolio.service;
 
 import com.example.portfolio._enum.ProductStatus;
 import com.example.portfolio._enum.ProductType;
+import com.example.portfolio.dto.ProductHistoryDTO;
 import com.example.portfolio.entity.Product;
+import com.example.portfolio.entity.ProductHistory;
+import com.example.portfolio.repository.ProductHistoryRepository;
 import com.example.portfolio.repository.ProductRepository;
 import com.example.portfolio.util.Result;
 import com.example.portfolio.util.ResultCodeEnum;
@@ -17,18 +20,16 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
+    private final ProductHistoryRepository historyRepository;
 
     // 每日刷新净值
     @Scheduled(cron = "0 0 0 * * *") // 每日零点执行
@@ -36,6 +37,7 @@ public class ProductService {
     public void refreshDailyData() {
         List<Product> activeProducts = productRepository.findByStatus(ProductStatus.有效);
         Random random = new Random();
+        LocalDate today = LocalDate.now();
 
         activeProducts.forEach(product -> {
             double rate;
@@ -57,15 +59,29 @@ public class ProductService {
             BigDecimal rateFactor = floatRate.divide(new BigDecimal(100), 4, RoundingMode.HALF_UP);
             BigDecimal newNetValue = oldNetValue.multiply(BigDecimal.ONE.add(rateFactor));
 
-            // 更新字段
-            product.setFloatRate(floatRate);
+            // 保存历史记录
+            ProductHistory history = new ProductHistory();
+            history.setProduct(product);
+            history.setNetValue(newNetValue);
+            history.setFloatRate(floatRate);
+            history.setRecordDate(today);
+            historyRepository.save(history);
+
+            // 更新当前产品记录
             product.setNetValue(newNetValue);
+            product.setFloatRate(floatRate);
+            product.setRecordDate(today);
         });
 
         productRepository.saveAll(activeProducts);
     }
 
 
+
+
+
+
+    //CRUD
     // 新增产品
     public Result<Product> createProduct(Product product) {
         return Result.build(productRepository.save(product), ResultCodeEnum.SUCCESS);

@@ -1,5 +1,4 @@
 package com.csis.usrservice.pojo;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -58,11 +57,11 @@ public class Admin {
     private String password;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "last_login")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @UpdateTimestamp
     private LocalDateTime lastLogin;
 
     @Column(name = "role", length = 10, nullable = false)

@@ -9,7 +9,8 @@ public class RecommendationItem {
 
     @Id
     @Column(name = "item_id", length = 36)
-    private String itemId; // 推荐项ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int itemId; // 推荐项ID
 
     @Column(name = "recommendation_id")
     private String recommendationId; // 外键，指向 Recommendations 表
@@ -32,11 +33,11 @@ public class RecommendationItem {
     private TradeType type;
     // Getters and Setters
 
-    public String getItemId() {
+    public int getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
     }
 

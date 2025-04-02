@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: client-service
+          uri: lb://CLIENT-SERVICE
+          predicates:
+            - Path=/api/clients/**
+        - id: risk-service
+          uri: lb://RISK-SERVICE
+          predicates:
+            - Path=/api/risks/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin

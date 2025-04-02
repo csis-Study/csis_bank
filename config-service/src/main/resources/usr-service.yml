@@ -1,0 +1,14 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: usr-service
+  datasource:
+    url: jdbc:mysql://db-server:3306/user_db?useSSL=false
+    username: user_admin
+    password: User@123
+
+jwt:
+  secret: wealth_jwt_secret_key
+  expiration: 86400000

@@ -32,6 +32,8 @@ public interface AdvisorRepository extends JpaRepository<Advisor, String> {
     @Query("SELECT a.password FROM Advisor a WHERE a.account = ?1")
     String findByAccounttoPassword(String account);
 
+    List<Advisor> findAll();
+
     // 自定义查询方法，查询最大的 advisorId
     @Query("SELECT MAX(a.advisorId) FROM Advisor a")
     String findMaxId();

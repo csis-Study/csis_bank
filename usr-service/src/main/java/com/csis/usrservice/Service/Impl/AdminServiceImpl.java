@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
+ *
+ *
  * @author 杜浩杰
  * @version 1.0
  * 2025/3/25
@@ -121,7 +124,9 @@ public class  AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public String login(String account) {
-        return adminRepository.findPasswordByUsername(account);
+    public Map<String,String> login(String account) {
+//        return
+        String passwordByUsername = adminRepository.findPasswordByUsername(account);
+            return  null;
     }
 }

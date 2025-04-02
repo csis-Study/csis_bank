@@ -2,22 +2,31 @@ package com.example.portfolio.controller;
 
 
 import com.example.portfolio._enum.ProductType;
+import com.example.portfolio.dto.ProductHistoryDTO;
 import com.example.portfolio.entity.Product;
 import com.example.portfolio.service.ProductService;
 import com.example.portfolio.util.Result;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
-@RequestMapping("/products")
-//@RequiredArgsConstructor
+@RequestMapping("/api/products")
+@RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
 
+    // CRUD
     // 新增产品
     @PostMapping
     public Result<Product> create(@RequestBody Product product) {

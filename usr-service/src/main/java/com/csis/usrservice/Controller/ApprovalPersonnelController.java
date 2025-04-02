@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/approval-personnel")
@@ -73,7 +74,7 @@ public class ApprovalPersonnelController {
     }
 
     @GetMapping("/{account}")
-    public Result  AccountFindPassword(@PathVariable String account){
+    public Result<Map<String,String>>  AccountFindPassword(@PathVariable String account){
 
         // 调用服务层的登录方法
         String encryptedPassword = approvalPersonnelService.login(account);

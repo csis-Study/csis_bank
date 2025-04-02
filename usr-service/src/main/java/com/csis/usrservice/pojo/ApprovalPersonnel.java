@@ -1,6 +1,5 @@
 package com.csis.usrservice.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -48,7 +47,7 @@ public class ApprovalPersonnel {
     private String status;
 
     @Column(name = "register_date", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @CreationTimestamp
     private LocalDateTime registerDate;
 
     @Column(name = "role", length = 20)

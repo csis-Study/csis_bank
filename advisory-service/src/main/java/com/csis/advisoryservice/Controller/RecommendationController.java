@@ -17,6 +17,7 @@ import java.util.List;
  * @version 1.0
  * 2025/3/27
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/recommendations")
 public class RecommendationController {
@@ -55,7 +56,7 @@ public class RecommendationController {
         return Result.build(recommendation,ResultCodeEnum.SUCCESS);
 //                recommendation.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    @CrossOrigin
     // 根据 advisor_id 查询推荐记录
     @GetMapping("/advisor/{advisorId}")
     public Result<List<Recommendation>> getRecommendationByAdvisorId(@PathVariable String advisorId) {

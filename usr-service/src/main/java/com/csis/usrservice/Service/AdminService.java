@@ -4,6 +4,7 @@ import com.csis.usrservice.pojo.Admin;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -46,5 +47,6 @@ public interface AdminService {
     List<Admin> findAdminsByNameContaining(String name);
 
     // 根据账户 ，密码查询用户
-    String login(String account);
+
+    Map<String,String> login(String account);
 }

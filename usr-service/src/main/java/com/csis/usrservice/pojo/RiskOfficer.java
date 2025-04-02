@@ -1,6 +1,5 @@
 package com.csis.usrservice.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -57,11 +56,10 @@ public class RiskOfficer {
     private String username;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Column(name = "last_login_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @UpdateTimestamp
     private LocalDateTime lastLoginTime;
 
     @Column(name = "role", length = 20, nullable = false)

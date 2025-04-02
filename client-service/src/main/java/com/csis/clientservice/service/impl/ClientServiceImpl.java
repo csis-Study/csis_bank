@@ -1,6 +1,8 @@
 package com.csis.clientservice.service.impl;
 
 import cn.hutool.crypto.digest.MD5;
+
+import com.csis.clientservice.common.PageResult;
 import com.csis.clientservice.common.ResultCodeEnum;
 import com.csis.clientservice.dto.BasicInfoDTO;
 import com.csis.clientservice.exception.DuplicateAccountException;
@@ -9,6 +11,10 @@ import com.csis.clientservice.pojo.Client;
 import com.csis.clientservice.repository.ClientRepository;
 import com.csis.clientservice.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,10 +57,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-    @Override
+   /* @Override
     public List<Client> getAllClients() {
         return clientRepository.findAll();
-    }
+    }*/
 
 
     @Override
@@ -135,7 +141,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-    @Override
+    /*@Override
     public List<Client> getClientsByManagerId(String relationshipManagerId) {
         // 执行数据库查询（JPA会自动使用@Entity校验参数格式）
         List<Client> clients = clientRepository.findByRelationshipManagerId(relationshipManagerId);
@@ -148,7 +154,7 @@ public class ClientServiceImpl implements ClientService {
 
         //log.info("成功获取客户经理[{}]的{}个客户", relationshipManagerId, clients.size());
         return clients;
-    }
+    }*/
 
     @Override
     public Client getClientByUsrAccount(String usrAccount) {
@@ -168,6 +174,38 @@ public class ClientServiceImpl implements ClientService {
             throw new ResourceNotFoundException(ResultCodeEnum.ACCOUNT_NOTFOUND);
         }
         clientRepository.deleteByUsrAccount(usrAccount);
+    }
+
+
+
+    @Override
+    public PageResult<Client> getAllClients(int page, int size) {
+        // 分页参数处理（Spring Data页码从0开始）
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("registerDate").descending());
+        Page<Client> clientPage = clientRepository.findAll(pageable);
+        return buildPageResult(clientPage, page, size);
+    }
+
+    @Override
+    public PageResult<Client> getClientsByManagerId(String managerId, int page, int size) {
+        // 分页参数处理
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("registerDate").descending());
+        Page<Client> clientPage = clientRepository.findByRelationshipManagerId(managerId, pageable);
+        return buildPageResult(clientPage, page, size);
+    }
+
+    // 构建分页结果对象
+    private PageResult<Client> buildPageResult(Page<Client> clientPage, int page, int size) {
+        if (clientPage.getTotalElements() == 0) {
+            throw new ResourceNotFoundException(ResultCodeEnum.NOT_FOUND);
+        }
+
+        return new PageResult.Builder<Client>()
+                .content(clientPage.getContent())
+                .total(clientPage.getTotalElements())
+                .page(page)
+                .size(size)
+                .build();
     }
 
 

@@ -1,6 +1,8 @@
 package com.csis.clientservice.repository;
 
 import com.csis.clientservice.pojo.Client;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -34,4 +36,13 @@ public interface ClientRepository extends JpaRepository<Client, String> {
     @Modifying
     @Query("DELETE FROM Client c WHERE c.usrAccount = :usrAccount")
     void deleteByUsrAccount(String usrAccount);
+
+    /**
+     * 根据客户经理ID分页查询客户
+     * @param managerId 客户经理ID（需符合U+11位数字格式）
+     * @param pageable 分页参数对象
+     * @return 分页结果
+     */
+    Page<Client> findByRelationshipManagerId(String managerId, Pageable pageable);
+
 }

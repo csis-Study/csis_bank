@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/recommendationsItem")
 public class RecommendationItemController {
@@ -41,8 +41,8 @@ public class RecommendationItemController {
             }
         }
         //删除多余的推荐项目
-        @DeleteMapping("/deleteRecommendationItem")
-        public Result<RecommendationItem> deleteRecommendationItem(@RequestBody String recommendation_id,String product_item){
+        @DeleteMapping("/deleteRecommendationItem/recommendationId/{recommendation_id}/productItem/{product_item}")
+        public Result<RecommendationItem> deleteRecommendationItem(@PathVariable String recommendation_id,@PathVariable String product_item){
             Boolean b = recommendationItemService.deleteRecommendationItem(recommendation_id,product_item);
             if (b){
                 return Result.build(recommendation_id,ResultCodeEnum.SUCCESS);

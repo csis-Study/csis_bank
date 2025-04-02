@@ -5,8 +5,11 @@ import com.example.portfolio._enum.ProductStatus;
 import com.example.portfolio._enum.ProductType;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "product")
@@ -28,54 +31,10 @@ public class Product {
     @Column(precision = 8, scale = 4)
     private BigDecimal floatRate;
 
+    @CreationTimestamp
+    @Column(name = "record_date", nullable = false)
+    private LocalDate recordDate;
+
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public ProductType getProductType() {
-        return productType;
-    }
-
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public BigDecimal getNetValue() {
-        return netValue;
-    }
-
-    public void setNetValue(BigDecimal netValue) {
-        this.netValue = netValue;
-    }
-
-    public BigDecimal getFloatRate() {
-        return floatRate;
-    }
-
-    public void setFloatRate(BigDecimal floatRate) {
-        this.floatRate = floatRate;
-    }
-
-    public ProductStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ProductStatus status) {
-        this.status = status;
-    }
 }

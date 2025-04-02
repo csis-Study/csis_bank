@@ -1,0 +1,16 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: risk-service
+  datasource:
+    url: jdbc:mysql://db-server:3306/risk_db?useSSL=false
+    username: risk_user
+    password: Risk@1234
+
+scheduler:
+  task:
+    page-size: 1000
+    initial-delay: 5000
+    thread-pool: 4

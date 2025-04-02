@@ -1,5 +1,7 @@
 package com.csis.clientservice.controller;
 
+
+import com.csis.clientservice.common.PageResult;
 import com.csis.clientservice.common.Result;
 import com.csis.clientservice.common.ResultCodeEnum;
 import com.csis.clientservice.dto.BasicInfoDTO;
@@ -7,7 +9,6 @@ import com.csis.clientservice.exception.ResourceNotFoundException;
 import com.csis.clientservice.pojo.Client;
 import com.csis.clientservice.service.ClientService;
 import jakarta.validation.Valid;
-
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,11 +41,11 @@ public class ClientController {
     }
 
     // 查询所有客户
-    @GetMapping
+    /*@GetMapping
     public Result<List<Client>> getAllClients() {
         List<Client> clients = clientService.getAllClients();
         return Result.build(clients, ResultCodeEnum.SUCCESS);
-    }
+    }*/
 
     // 根据ID查询客户
     @GetMapping("/{usrId}")
@@ -132,9 +132,8 @@ public class ClientController {
     /**
      * 根据客户经理ID查询关联客户
      * @param managerId 必须符合格式：U+11位数字
-     * @return 统一封装的响应结果
-     */
-    @GetMapping("/manager/{managerId}")
+     * @return 统一封装的响应结果*/
+    /*@GetMapping("/manager/{managerId}")
     public Result<List<Client>> getClientsByManager(
             @PathVariable
             @Pattern(regexp = "^U\\d{11}$", message = "用户经理ID格式错误")  // 复用实体类校验规则
@@ -145,5 +144,36 @@ public class ClientController {
 
         // 封装统一响应格式
         return Result.build(clients, ResultCodeEnum.SUCCESS);
+    }*/
+
+    /**
+     * 分页查询所有客户
+     * @param page 当前页码（默认1）
+     * @param size 每页条数（默认10）
+     */
+    @GetMapping
+    public Result<PageResult<Client>> getAllClients(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
+        PageResult<Client> result = clientService.getAllClients(page, size);
+        return Result.build(result, ResultCodeEnum.SUCCESS);
     }
+
+    /**
+     * 根据客户经理ID分页查询客户
+     * @param managerId 客户经理ID（需符合U+11位数字格式）
+     * @param page 当前页码（默认1）
+     * @param size 每页条数（默认10）
+     */
+    @GetMapping("/manager/{managerId}")
+    public Result<PageResult<Client>> getClientsByManager(
+            @PathVariable
+            @Pattern(regexp = "^U\\d{11}$", message = "用户经理ID格式错误")
+            String managerId,
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
+        PageResult<Client> result = clientService.getClientsByManagerId(managerId, page, size);
+        return Result.build(result, ResultCodeEnum.SUCCESS);
+    }
+
 }

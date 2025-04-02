@@ -1,0 +1,14 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: portfolio-service
+  datasource:
+    url: jdbc:mysql://db-server:3306/portfolio_db?useSSL=false
+    username: portfolio_user
+    password: Portfolio@123
+
+calculation:
+  precision: 6
+  rounding-mode: HALF_UP

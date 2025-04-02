@@ -1,6 +1,5 @@
 package com.csis.usrservice.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -63,11 +62,11 @@ public class Advisor {
     private Integer status;
 
     @Column(name = "create_time", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @CreationTimestamp
     private LocalDateTime createTime;
 
     @Column(name = "last_update_time", nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @UpdateTimestamp
     private LocalDateTime lastUpdateTime;
 
     // Getter 和 Setter 方法
